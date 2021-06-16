@@ -23,12 +23,14 @@ fi
 for ip in `cat $1` 
 do
         mkdir $ip
+        chmod 666 -R $ip
         echo -e "${green}Running nmap TCP scan on all ports for host: $ip"
-        sudo nmap -sV -sC -p- $ip > $ip/nmap.tcpall
+        nmap -sV -sC -p- $ip > $ip/nmap.tcpall
+        chmod 666 $ip/nmap.tcpall
         echo -e "${green}Done."
         echo -e "${green}Running nmap UDP scan on top 100 ports for host: $ip"
-        sudo nmap -sU -sV --top-ports 100 $ip > $ip/nmap.udp100
-        chmod 777 -R $ip
+        nmap -sU -sV --top-ports 100 $ip > $ip/nmap.udp100
+        chmod 666 $ip/nmap.udp100
         echo -e "${green}Done."
 done
 echo -e "${blue}\n\nAll scans complete."
